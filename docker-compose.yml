@@ -1,0 +1,30 @@
+services:
+  node:
+    build: ./node
+    ports:
+      - "3000:3000"
+    networks:
+      demo_net:
+        ipv4_address: 172.20.0.2
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      demo_net:
+        ipv4_address: 172.20.0.3
+
+
+  attacker:
+    build: ./attacker
+    networks:
+      demo_net:
+        ipv4_address: 172.20.0.4
+
+networks:
+  demo_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
