@@ -1,0 +1,43 @@
+services:
+  c2:
+    build:
+      context: ./c2
+    networks:
+      - botnet_net
+    container_name: c2-server
+    ports:
+      - "4444:4444"
+    
+
+  bot1:
+    build:
+      context: ./bot
+    networks:
+      - botnet_net
+    container_name: bot1
+    depends_on:
+      - c2
+
+  victim-web:
+    build: ./victim-web
+    networks:
+      victim_net:
+        ipv4_address: 10.6.0.2
+    container_name: victim-web
+    ports:
+      - "3001:3001"
+
+  # reverse-proxy:
+  #   networks:
+  #     victim_net:
+  #       ipv4_address: 10.6.0.2
+  #   container_name: reverse-proxy
+
+networks:
+  botnet_net:
+    driver: bridge
+  victim_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.6.0.0/24
