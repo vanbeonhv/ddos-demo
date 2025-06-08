@@ -1,7 +1,6 @@
-FROM node:18-alpine
+FROM python:3.10
 
 WORKDIR /app
-COPY . .
+COPY c2_server.py .
 
-RUN npm install
-CMD ["node", "index.js"]
+CMD ["bash"]
