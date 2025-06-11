@@ -1,13 +1,4 @@
 services:
-  # c2:
-  #   build:
-  #     context: ./c2
-  #   networks:
-  #     - botnet_net
-  #   container_name: c2
-  #   ports:
-  #     - "4444:4444"
-
   bot1:
     build: ./bot
     networks:
@@ -29,14 +20,21 @@ services:
         ipv4_address: 172.30.0.6
     container_name: bot3
 
-  victim-web:
-    build: ./victim-web
+  bot4:
+    build: ./bot4
     networks:
       victim_net:
-        ipv4_address: 172.30.0.2
-    container_name: victim-web
-    ports:
-      - "3000:3000"
+        ipv4_address: 172.30.0.7
+    container_name: bot4
+
+  # victim-web:
+  #   build: ./victim-web
+  #   networks:
+  #     victim_net:
+  #       ipv4_address: 172.30.0.2
+  #   container_name: victim-web
+  #   ports:
+  #     - "3000:3000"
 
   # reverse-proxy:
   #   networks:
