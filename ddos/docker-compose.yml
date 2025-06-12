@@ -8,19 +8,19 @@ services:
     cap_add:
       - NET_RAW
 
-  # bot2:
-  #   build: ./bot2
-  #   networks:
-  #     victim_net:
-  #       ipv4_address: 172.30.0.5
-  #   container_name: bot2
+  bot2:
+    build: ./bot2
+    networks:
+      victim_net:
+        ipv4_address: 172.30.0.5
+    container_name: bot2
 
-  # bot3:
-  #   build: ./bot3
-  #   networks:
-  #     victim_net:
-  #       ipv4_address: 172.30.0.6
-  #   container_name: bot3
+  bot3:
+    build: ./bot3
+    networks:
+      victim_net:
+        ipv4_address: 172.30.0.6
+    container_name: bot3
 
   bot4:
     build: ./bot4
