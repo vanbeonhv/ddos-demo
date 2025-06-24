@@ -38,11 +38,13 @@ services:
   #   ports:
   #     - "3000:3000"
 
-  # reverse-proxy:
+  # nginx:
+  #   build: ./nginx
+  #   ports:
+  #     - "80:80"
   #   networks:
-  #     victim_net:
-  #       ipv4_address: 10.6.0.2
-  #   container_name: reverse-proxy
+  #     demo_net:
+  #       ipv4_address: 172.30.0.3
 
 networks:
   victim_net:

